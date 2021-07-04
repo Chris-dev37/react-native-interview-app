@@ -1,11 +1,31 @@
-import React from 'react';
-import {View, Text, Button} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button } from 'react-native';
 
-const TimerScreen = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff4081' }}>
-    <Text>Page 1</Text>
-    <Button title="Press me"/>
-  </View>
-);
+const TimerScreen = () => {
+
+  const [count, setCount] = useState(10);
+  const [disable, setDisable] = useState(false);
+
+  const startCount = () => {
+    setDisable(true);
+  };
+  
+  useEffect(() => {
+    if (count > 0 && disable) {
+      setTimeout(() => setCount(count - 1), 1000);
+    } else {
+      setCount(10);
+      setDisable(false);
+    }
+
+  });
+  return (
+    <View style={{ flex: 1, backgroundColor: '#ff4081' }}>
+      <Text>Page 1</Text>
+      <Button title="Press me" onPress={startCount} disabled={disable} />
+      <Text style={{textAlign: 'center', fontSize: 50}}>{count}</Text>
+    </View>
+  )
+};
 
 export default TimerScreen;
